@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Shareido</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link href="/styles.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-light" id="Home">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#Home">Shareido</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <!-- <li class="nav-item active">
+              <a class="nav-link js-scroll-trigger" href="#Home">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li> -->
+                    <li class="nav-item">
+                        <a target="_blank" rel="noopener noreferrer" class="nav-link js-scroll-trigger"
+                            href="https://www.linkedin.com/in/ankur-sharma-341446b1/">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a target="_blank" rel="noopener noreferrer" class="nav-link js-scroll-trigger"
+                        href="https://github.com/Ankur2491">
+                        <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid">
+        <!-- User Form (First Page) -->
+        <div id="userFormArea" class="row">
+            <div class="col-md-12">
+                <!-- ADD DESCRIPTION HERE -->
+                <p class="lead">Shareido provides a platform where users can watch videos in sync along with group
+                    text/video chat.</p>
+                <hr style="height:20pt; visibility:hidden;" />
+
+                <h2> Join a Room! </h2>
+                <form id="userForm">
+                    <div class="form-group">
+                        <p style="color:red; margin-bottom: 0px" id="missinginfo"></p>
+                        <label>Enter Name</label>
+                        <input class="form-control" id="username" />
+                        <br />
+                        <p style="color:red; margin-bottom: 0px" id="missinginfo2"></p>
+                        <label>Enter Room ID</label>
+                        <br />
+                        <input class="form-control" id="roomnum" />
+                        <br />
+
+                        <input style="margin-top: 10px;" type="submit" class="btn btn-primary" value="Enter" />
+                        <hr style="height:65pt; visibility:hidden;" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="roomArea">
+            <!-- Heading Row -->
+            <div class="row my-4" style="margin-top: 0px !important;">
+                <div class="col-lg-7">
+
+                    <div class="nonmobile-hide"><b>Note: </b>Only the host can control the video using the native video
+                        player controls </div>
+                    <div class="mobile-hide"><b>Mobile User</b>, please play the video once manually to give the browser
+                        permission to control the video player. </div>
+                    <!-- <hr style="height:0pt; visibility:hidden;" /> -->
+
+                    <!-- <div style="margin: 10px" class="dropdown">
+                        <button style="background-color: #007bff" class="btn btn-info" type="button"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-video"></i> Player
+                        </button>
+                    </div> -->
+
+
+
+                    <!-- <br/> <b>Note:</b> Mobile web browsers do not support autoplay. Host can control player natively. -->
+
+                    <!-- INVITE MOVED TO MODAL -->
+                    <!-- <p id="invite">Invite a friend! Send them the link: vynchronize.herokuapp.com/ROOMNUM</p> -->
+                    <h2><span id="hostlabel" class="label label-default"><i class="fas fa-user"></i> Current Host:
+                        </span></h2>
+
+                    <!----------------------------------- PLAYER AREA ----------------------------------->
+                    <div id='HTML5Area'>
+                        <div class="html5player">
+                            <video src="KillingMeSoftly.mp4" width="640" height="360" class="video html5video"
+                                id="html5src" controls>
+                                <!-- <source src="video/sintel-short.mp4" type="video/mp4">
+                            <source src="video/sintel-short.webm" type="video/webm"> -->
+                                <!-- fallback content here -->
+                            </video>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary" id="sync">Sync</button>
+                    </div>
+                    <!----------------------------------- PLAYER AREA ----------------------------------->
+                    <!-- <hr> -->
+                    <!-- Div for lights off! -->
+                    <!-- <input type="file" id="html5-input" /> -->
+                    <!-- Playlist shit -->
+                    <div id="visual-queue" class="vid-list-container">
+                        <ul class="vid-list" id="vidlist">
+                            <li class="vid-item">
+                                <!-- <div class="thumb">
+                                    <a onClick="removeAt(0)" class="ghost-button-full-color"><i class="far fa-times-circle"></i></a>
+                                    <img src="http://img.youtube.com/vi/eg6kNoJmzkY/0.jpg">
+                                </div>
+                                <div class="desc">
+                                    Jessica Hernandez & the Deltas - Dead Brains
+                                </div> -->
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="queue-arrows" class="arrows">
+                        <div class="arrow-left">
+                            <i class="fa fa-chevron-left fa-lg"></i>
+                        </div>
+                        <div class="arrow-right">
+                            <i class="fa fa-chevron-right fa-lg"></i>
+                        </div>
+                    </div>
+                    <br />
+
+                    <!-- HTML5 player input -->
+                    <!-- <input type="file" id="html5-input" /> -->
+                    <!-- <input type="Video" style="max-width: 200px; margin-right: .5rem; margin-bottom: .5rem; float: left;" class="form-control" id="inputVideoURL" placeholder="Direct URL to .mp4/.webm"> -->
+
+                    <!-- <p style="display: none" id="html5-message" class="lead">Video File Upload Not Yet Supported</p> -->
+                </div>
+
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-5">
+                    <div class="col-md-4"> 
+                    <div id="onlineArea" class="row">
+                    <h5 class="right-header">Online Users</h5>
+                    <hr style="height:0pt; visibility:hidden;" />
+                    <div class="col-md-13">
+                        <div class="well online-users noscrollbar">
+                            <ul class="list-group" id="users"></ul>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    <hr style="height:0pt; visibility:hidden;" />
+                    <h5 style="color:gray;">Chatroom</h5>
+                    <!-- </div> -->
+                    <!-- </div> -->
+
+                    <div id="messageArea" class="row">
+                        <br />
+                        <!-- <h2 style="color:gray">Chat</h2> -->
+                        <div class="col-md-12">
+                            <div class="chat noscrollbar" id="chat"></div>
+                            <!-- Message Form (Enter Message) -->
+                            <form id="messageForm">
+                                <div class="form-group">
+                                    <br />
+                                    <div id="feedback"></div>
+                                    <!-- <label>Enter Message...</label> -->
+                                    <input class="form-control chat-form" id="message" placeholder="Enter Message..." />
+                                    <!-- <textarea class="form-control" id="message"></textarea> -->
+                                    <br />
+                                    <!-- <input type="submit" class="btn btn-primary" value="Send Message" /> -->
+                                    <br />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+    <!-- <div id="mario-chat">
+        <div id="chat-window">
+            <div id="output"></div>
+            <div id="feedback"></div>
+        </div>
+            <input id="handle" type="text" placeholder="Handle" />
+            <input id="message" type="text" placeholder="Message" />
+            <button id="send">Send</button>
+    </div>
+    <script src="/chat.js"></script> -->
+    <script src="/client.js"></script>
+</body>
+
+</html>
